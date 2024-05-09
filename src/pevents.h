@@ -14,6 +14,10 @@
 #include <errno.h>
 #define WAIT_TIMEOUT ETIMEDOUT
 #endif
+#ifndef WAIT_FAILED
+#include <errno.h>
+#define WAIT_FAILED -EPERM
+#endif
 
 #include <stdint.h>
 
