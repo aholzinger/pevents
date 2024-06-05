@@ -14,6 +14,7 @@ add_library(pevents::lib ALIAS pevents_lib)
 target_sources(pevents_lib
 PUBLIC
     pevents.h
+    pevents.hpp
 PRIVATE
     pevents.cpp
 )
@@ -22,7 +23,7 @@ if(WIN32)
     set_target_properties(pevents_lib PROPERTIES
         WINDOWS_EXPORT_ALL_SYMBOLS ON
         POSITION_INDEPENDENT_CODE ON
-        PUBLIC_HEADER "pevents.h"
+        PUBLIC_HEADER "pevents.h;pevents.hpp"
     )
 else()
     set_target_properties(pevents_lib PROPERTIES PUBLIC_HEADER "pevents.h")
