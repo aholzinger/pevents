@@ -16,32 +16,16 @@ namespace neosmart {
     const uint64_t WAIT_INFINITE = NSPE_WAIT_INFINITE;
 
     // Function declarations
-    inline neosmart_event_t CreateEvent(bool manualReset = false, bool initialState = false) {
-        return NspeCreateEvent(manualReset, initialState);
-    }
-    inline int DestroyEvent(neosmart_event_t event) {
-        return NspeDestroyEvent(event);
-    }
-    inline int WaitForEvent(neosmart_event_t event, uint64_t milliseconds = WAIT_INFINITE) {
-        return NspeWaitForEvent(event, milliseconds);
-    }
-    inline int SetEvent(neosmart_event_t event) {
-        return NspeSetEvent(event);
-    }
-    inline int ResetEvent(neosmart_event_t event) {
-        return NspeResetEvent(event);
-    }
+    neosmart_event_t CreateEvent(bool manualReset = false, bool initialState = false);
+    int DestroyEvent(neosmart_event_t event);
+    int WaitForEvent(neosmart_event_t event, uint64_t milliseconds = WAIT_INFINITE);
+    int SetEvent(neosmart_event_t event);
+    int ResetEvent(neosmart_event_t event);
 #ifdef WFMO
-    inline int WaitForMultipleEvents(neosmart_event_t *events, int count, bool waitAll, uint64_t milliseconds) {
-        return NspeWaitForMultipleEvents(events, count, waitAll, milliseconds);
-    }
-    inline int WaitForMultipleEvents(neosmart_event_t* events, int count, bool waitAll, uint64_t milliseconds, int &index) {
-        return  NspeWaitForMultipleEventsWithIndex(events, count, waitAll, milliseconds, &index);
-    }
+    int WaitForMultipleEvents(neosmart_event_t *events, int count, bool waitAll, uint64_t milliseconds);
+    int WaitForMultipleEvents(neosmart_event_t* events, int count, bool waitAll, uint64_t milliseconds, int &index);
 #endif
 #ifdef PULSE
-    inline int PulseEvent(neosmart_event_t event) {
-        return NspePulseEvent(event);
-    }
+    int PulseEvent(neosmart_event_t event);
 #endif
 } // namespace neosmart

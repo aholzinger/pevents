@@ -35,10 +35,8 @@ int NspeWaitForEvent(neosmart_event_t event, uint64_t milliseconds);
 int NspeSetEvent(neosmart_event_t event);
 int NspeResetEvent(neosmart_event_t event);
 #ifdef WFMO
-    int NspeWaitForMultipleEvents(neosmart_event_t *events, int count, bool waitAll,
-                              uint64_t milliseconds);
-    int NspeWaitForMultipleEventsWithIndex(neosmart_event_t *events, int count, bool waitAll,
-                              uint64_t milliseconds, int *index);
+    int NspeWaitForMultipleEvents(neosmart_event_t *events, int count, bool waitAll, uint64_t milliseconds);
+    int NspeWaitForMultipleEventsWithIndex(neosmart_event_t *events, int count, bool waitAll, uint64_t milliseconds, int *index);
 #endif
 #ifdef PULSE
     int NspePulseEvent(neosmart_event_t event);
