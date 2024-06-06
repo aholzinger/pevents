@@ -5,10 +5,52 @@
  * SPDX-License-Identifier: MIT
  */
 
-#ifndef _WIN32
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 
-#include "pevents.h"
-#include <assert.h>
+#include "pevents.hpp"
+#include <cassert>
+#include <cstdint>
+
+neosmart_event_t NspeCreateEvent(bool manualReset, bool initialState) {
+    return neosmart::CreateEvent(manualReset, initialState);
+}
+
+int NspeDestroyEvent(neosmart_event_t event) {
+    return neosmart::DestroyEvent(event);
+}
+
+int NspeWaitForEvent(neosmart_event_t event, uint64_t milliseconds) {
+    return neosmart::WaitForEvent(event, milliseconds);
+}
+
+int NspeSetEvent(neosmart_event_t event) {
+    return neosmart::SetEvent(event);
+}
+
+int NspeResetEvent(neosmart_event_t event) {
+    return neosmart::ResetEvent(event);
+}
+
+#ifdef WFMO
+    int NspeWaitForMultipleEvents(neosmart_event_t *events, int count, bool waitAll, uint64_t milliseconds) {
+        return neosmart::WaitForMultipleEvents(events, count, waitAll, milliseconds);
+    }
+
+    int NspeWaitForMultipleEventsWithIndex(neosmart_event_t *events, int count, bool waitAll, uint64_t milliseconds, int *index) {
+        assert(index);
+        return neosmart::WaitForMultipleEvents(events, count, waitAll, milliseconds, *index);
+    }
+#endif
+
+#ifdef PULSE
+    int NspePulseEvent(neosmart_event_t event) {
+        return neosmart::PulseEvent(event);
+    }
+#endif
+
+#ifndef _WIN32
 #include <errno.h>
 #include <pthread.h>
 #include <sys/time.h>
@@ -555,47 +597,6 @@ namespace neosmart {
 } // namespace neosmart
 
 #else // _WIN32
-
-#include <assert.h>
-#include <Windows.h>
-#include "pevents.hpp"
-
-neosmart_event_t NspeCreateEvent(bool manualReset, bool initialState) {
-    return neosmart::CreateEvent(manualReset, initialState);
-}
-
-int NspeDestroyEvent(neosmart_event_t event) {
-    return neosmart::DestroyEvent(event);
-}
-
-int NspeWaitForEvent(neosmart_event_t event, uint64_t milliseconds) {
-    return neosmart::WaitForEvent(event, milliseconds);
-}
-
-int NspeSetEvent(neosmart_event_t event) {
-    return neosmart::SetEvent(event);
-}
-
-int NspeResetEvent(neosmart_event_t event) {
-    return neosmart::ResetEvent(event);
-}
-
-#ifdef WFMO
-    int NspeWaitForMultipleEvents(neosmart_event_t *events, int count, bool waitAll, uint64_t milliseconds) {
-        return neosmart::WaitForMultipleEvents(events, count, waitAll, milliseconds);
-    }
-
-    int NspeWaitForMultipleEventsWithIndex(neosmart_event_t *events, int count, bool waitAll, uint64_t milliseconds, int *index) {
-        assert(index);
-        return neosmart::WaitForMultipleEvents(events, count, waitAll, milliseconds, *index);
-    }
-#endif
-
-#ifdef PULSE
-    int NspePulseEvent(neosmart_event_t event) {
-        return neosmart::PulseEvent(event);
-    }
-#endif
 
 namespace neosmart {
     neosmart_event_t CreateEvent(bool manualReset, bool initialState) {
