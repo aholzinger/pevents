@@ -19,11 +19,12 @@
 #define WAIT_FAILED -EPERM
 #endif
 
+#include <stdbool.h>
 #include <stdint.h>
 
 // Type declarations
 struct neosmart_event_t_;
-typedef neosmart_event_t_ *neosmart_event_t;
+typedef struct neosmart_event_t_ *neosmart_event_t;
 
 // Constant declarations
 const uint64_t NSPE_WAIT_INFINITE = ~((uint64_t)0);
