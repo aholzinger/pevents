@@ -61,7 +61,6 @@ int NspeResetEvent(neosmart_event_t event) {
 #include <deque>
 #endif
 
-namespace neosmart {
 #ifdef WFMO
     // Each call to WaitForMultipleObjects initializes a neosmart_wfmo_t object which tracks
     // the progress of the caller's multi-object wait and dispatches responses accordingly.
@@ -104,6 +103,7 @@ namespace neosmart {
 #endif
     };
 
+namespace neosmart {
 #ifdef WFMO
     static bool RemoveExpiredWaitHelper(neosmart_wfmo_info_t_ wait) {
         if (wait.Waiter->StillWaiting.load(std::memory_order_relaxed)) {
